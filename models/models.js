@@ -52,12 +52,19 @@ var Course = sequelize.import(path.join(__dirname, 'course'));
 var StudentCourse = sequelize.import(path.join(__dirname, 'student_course'));
 
 // Relaciones
-Student.belongsTo(User);
+User.hasOne(Student, {
+    onDelete: 'cascade'
+});
+Student.belongsTo(User, {
+    onDelete: 'cascade'
+});
 Student.belongsToMany(Course, {
-    through: StudentCourse
+    through: StudentCourse,
+    onDelete: 'cascade'
 });
 Course.belongsToMany(Student, {
-    through: StudentCourse
+    through: StudentCourse,
+    onDelete:'cascade'
 });
 
 exports.User = User;
@@ -66,5 +73,23 @@ exports.Course = Course;
 exports.StudentCourse = StudentCourse;
 
 sequelize.sync().then(function() {
+    /*
+    User.create({
+        email: 'prueba1',
+        password: 'prueba1',
+        role: 'STUDENT',
+    }).then(function(user1) {
+        Student.create({
+            name: 'prueba1',
+            surname: 'prueba1',
+            year: '1',
+            avgGrade: '4',
+            credits: '12',
+            specialisation: 'IS',
+        }).then(function(student1) {
+            student1.setUser(user1);
+        });
+    });
+    */
     console.log('Base de datos abierta');
 });

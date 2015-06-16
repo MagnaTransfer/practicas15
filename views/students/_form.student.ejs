@@ -1,0 +1,34 @@
+<fieldset>
+    <legend>Información de estudiante</legend>
+    <div>
+        <label for="student[name]">Nombre: </label>
+        <input type="text" id="student[name]" name="student[name]" value="<%= student.name %>" />
+    </div>
+    <div>
+        <label for="student[surname]">Apellido: </label>
+        <input type="text" id="student[surname]" name="student[surname]" value="<%= student.surname %>" />
+    </div>
+    <div>
+        <label for="student[year]">Curso: </label>
+        <input type="number" min="1" max="4" id="student[year]" 
+        name="student[year]" value="<%= student.year %>" required />
+    </div>
+    <div>
+        <label for="student[avgGrade]">Nota media: </label>
+        <input type="text" id="student[avgGrade]" 
+        name="student[avgGrade]" value="<%= student.year %>" />
+    </div>
+    <div>
+        <label for="student[credits]">Créditos superados: </label>
+        <input type="number" id="student[credits]" 
+        name="student[credits]" value="<%= student.year %>" />
+    </div>
+    <div>
+        <label for="student[specialisation]">Especialidad: </label>
+        <select id="student[specialisation]" name="student[specialisation]" >
+            <option value="IS" <% if (student.specialisation === "IS") { %> selected <% } %> >Ingeniería del Software</option>
+            <option value="IC" <% if (student.specialisation === "IC") { %> selected <% } %> >Ingeniería de Computadoras</option>
+            <option value="C" <% if (student.specialisation === "C") { %> selected <% } %> >Computación</option>
+        </select>
+    </div>
+</fieldset>

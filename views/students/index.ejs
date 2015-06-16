@@ -1,0 +1,15 @@
+<div>
+    <ul>
+        <li>
+            <a href="/students/new">Crear estudiante</a>
+        </li>
+        <% var i; for (i=0; i<students.length; i++) { %>
+            <li>
+                <a href="students/<%= students[i].UserId %>/edit"><%= students[i].User.email %></a>
+                <form method="post" action="/students/<%= students[i].UserId %>?_method=delete">
+                    <input type="submit" value="Eliminar"/>
+                </form>
+            </li>
+        <% } %>
+    </ul>
+</div>
