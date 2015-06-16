@@ -1,0 +1,12 @@
+<fieldset>
+    <legend>Información de usuario</legend>
+    <div>
+        <label for="user[email]">Correo: </label>
+        <input type="text" id="user[email]" name="user[email]" value="<%= user.email %>" required />
+    </div>
+    <div>
+        <label for="user[password]">Contraseña: </label>
+        <input type="password" id="user[password]" name="user[password]" value="<%= user.password %>" required />
+    </div>
+    <input type="hidden" name="user[role]" value="STUDENT" />
+</fieldset>
