@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var managerController = require('../controllers/managerController.js');
 
 var courseController = require('../controllers/courseController');
 
@@ -38,5 +39,14 @@ router.get('/logout', sessionController.destroy); //hacer logout
 
 
 
+
+
+router.param('id', managerController.load);
+router.get('/manager', managerController.index);
+router.get('/manager/new', managerController.new);
+router.post('/manager/create', managerController.create);
+router.get('/manager/:id(\\d)/edit', managerController.edit);
+router.put('/manager/:id(\\d)', managerController.update);
+router.delete('/manager/:id(\\d)/delete/', managerController.destroy);
 
 module.exports = router;
