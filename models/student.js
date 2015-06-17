@@ -64,7 +64,7 @@ module.exports = function(sequelize, DataTypes) {
         specialisation: {
             type: DataTypes.ENUM,
             allowNull: true,
-            values: ["IS", "IC", "C"],
+            values: ['IS', 'IC', 'C'],
         }
     });
 }
