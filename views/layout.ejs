@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <title> placeForMe </title>
@@ -18,8 +18,18 @@
         <span><a href="/logout">Logout</a></span>
     </nav>
     <section class="main" id="s1">
-        <%- body %>
+        <% if (typeof(errors) !== "undefined") { %>
+        <span id='ErrorMsgs'>
+        Corregir errores:<br/>
+            <% for (var i in errors) { %>
+            <span> <%= errors[i].message %> </span><br/>
+            <% } %>
+        </span>
+        <% } %>
+
+        <div><%- body %></div>
     </section>
+
     <footer class="main" id="f1">
         <a href="http://www.magnasis.com">By Magna SIS</a>
     </footer>
