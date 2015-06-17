@@ -6,7 +6,6 @@ var courseController = require('../controllers/courseController');
 
 var studentController = require('../controllers/studentController.js');
 
-/* GET home page. */
 var sessionController = require('../controllers/sessionController');
 
 /* Página de entrada GET home page. */
@@ -36,9 +35,6 @@ router.delete('/students/:userId(\\d+)', studentController.destroy);
 router.get('/login', sessionController.new); // formulario login, muestra la pagina
 router.post('/login', sessionController.create); //hacer login
 router.get('/logout', sessionController.destroy); //hacer logout
-
-
-
 
 
 router.param('id', managerController.load);

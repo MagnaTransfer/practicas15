@@ -4,7 +4,7 @@
             <td><%=managers[i].email %></td>
             <td><a href="/manager/<%= managers[i].id%>/edit"><button>editar</button></a></td>
             <td>
-                <form method="post" action="<%= managers[i].id%>/delete/?_method=delete">
+                <form method="post" action="/manager/<%= managers[i].id %>/delete/?_method=delete">
                     <button type="submit" onclick="return confirm('Borrar manager:<%managers[i].email %>');">borrar</button>
                 </form>
             </td>
