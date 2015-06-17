@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
 require('dotenv').load();
+var session = require('express-session');
 
 var routes = require('./routes/index');
 
@@ -21,10 +22,33 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cookieParser());
 app.use(partials());
 app.use(methodOverride('_method'));
+app.use(cookieParser('Practicas 15'));
+app.use(session({
+    //secret: cookie_secret,
+    //name: cookie_name,
+    //store: sessionStore, // connect-mongo session store
+    proxy: true,
+    resave: true,
+    saveUninitialized: true}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+//Helpers dinamicos:
+app.use(function(req, res, next){
+
+  //guardar path en session.redir para despues de login
+  if(!req.path.match(/\/login|\/logout/)){
+    req.session.redir = req.path;
+  }
+
+  //hacer visible req.session en las vistas
+  res.locals.session = req.session;
+  next();
+});
+
+
 
 app.use('/', routes);
 
@@ -33,6 +57,16 @@ app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
+
+
+//guardar path en session.redir para despues de login
+if(!req.path.match(/\/login|\/logout/)){
+  req.session.redir = req.path;
+}
+
+//hacer visible req.session en las vistas
+res.locals.session = req.session;
+next();
 });
 
 // error handlers
