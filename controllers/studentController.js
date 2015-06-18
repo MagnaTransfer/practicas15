@@ -60,7 +60,7 @@ exports.create = function(req, res, next) {
                     else
                         student.save().then(function() {
                             student.setUser(user).then(function() {
-                                res.redirect('/student');
+                                res.redirect('/');
                             });
                         });
                 }).catch(function(error) {

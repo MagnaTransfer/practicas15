@@ -1,0 +1,15 @@
+<div>
+    <ul>
+        <li>
+            <a href="/users/new">Crear usuario</a>
+        </li>
+        <% var i; for (i = 0; i < users.length; i++) { %>
+        <li>
+            <%= users[i].email %>
+            <form method="post" action="/users/<%= users[i].id %>?_method=delete">
+                <input type="submit" value="Eliminar"/>
+            </form>
+        </li>
+        <% } %>
+    </ul>
+</div>

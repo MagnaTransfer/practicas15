@@ -18,12 +18,16 @@ exports.load = function (req, res, next, id) {
 };
 
 exports.index = function (req, res) {
-    models.User.findAll().then(function (managers) {
+    models.User.find({
+        where: {
+            role: "MANAGER"
+        }
+    }).then(function (managers) {
         res.render('managers/index.ejs', {managers: managers, errors: []});
     }).catch(function (error) {
         next(error)
     });
-}
+};
 
 exports.new = function (req, res) {
     var manager = models.User.build(
@@ -39,7 +43,7 @@ exports.create = function (req, res) {
         role: "MANAGER"
     });
     manager.save({fields: ["email", "password", "role"]}).then(function () {
-        res.redirect('/manager');
+        res.redirect('/');
     })
 };
 
@@ -54,11 +58,11 @@ exports.update = function (req, res) {
 
     req.manager.validate().then(function (err) {
             if (err) {
-                res.render('/manager/', {manager: req.manager, errors: err.errors});
+                res.render('/managers/', {manager: req.manager, errors: err.errors});
             }
             else {
                 req.manager.save({fields: ["email", "password"]}).then(function () {
-                    res.redirect('/manager/');
+                    res.redirect('/');
                 });
             }
         }
@@ -67,7 +71,7 @@ exports.update = function (req, res) {
 
 exports.destroy = function (req, res) {
     req.manager.destroy().then(function () {
-        res.redirect('/manager');
+        res.redirect('/');
     }).catch(function (error) {
         next:(error)
     });
