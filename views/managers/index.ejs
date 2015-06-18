@@ -1,15 +1,16 @@
-<table>
-    <%var i; for(i=0; i< managers.length;i++){%>
-        <tr>
-            <td><%=managers[i].email %></td>
-            <td><a href="/manager/<%= managers[i].id%>/edit"><button>editar</button></a></td>
-            <td>
-                <form method="post" action="/manager/<%= managers[i].id %>/delete/?_method=delete">
-                    <button type="submit" onclick="return confirm('Borrar manager:<%managers[i].email %>');">borrar</button>
-                </form>
-            </td>
-        </tr>
-    <% }%>
-</table>
-<p/>
-<a href="/manager/new"><button>Crear manager</button></a>
+<a href="/logout">Salir</a>
+<p>
+ <table >
+     <tr>
+        <td> <%= session.user.email %> </td >
+         <td><a href="/manager/edit"><button> Editar</button ></a ></td>
+        <td>
+            <form method="post" action="/manager/delete/?_method=delete ">
+                <button type="submit" onclick=" return confirm('Borrar manager:<% session.user.email %>');">borrar manager</button >
+            </form>
+        </td>
+     </tr>
+     <tr>
+        <a href=" /courses/all"> <button>Administrar asignaturas</button></a>
+     </tr>
+ </table>

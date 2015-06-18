@@ -1,0 +1,7 @@
+<a href="/logout">Salir</a>
+<p>
+    Editar asignatura: <p>
+
+<form method="post" action="/courses/<%= course.id%>?_method=put">
+    <% include _form.ejs %>
+</form>

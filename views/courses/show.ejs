@@ -1,13 +1,19 @@
-<% for(index in courses){ %>
-<% course = courses[index]; %>
-<form method="post" action="/courses/<%= courses[index].id %>?_method=put">
-    <% include _form.ejs %>
-</form>
+<a href="/logout">Salir</a>
 
-<form method="post" action="/courses/<%= courses[index].id %>?_method=delete">
-    <button type="submit" onClick="return confirm('Eliminar asignatura: <% courses[index].name %>');">
-        Eliminar asignatura
-    </button>
-</form>
+<a href="/manager">Menu manager</a>
 
-<% } %>
+<table>
+    <%var i; for(i=0; i< courses.length;i++){%>
+    <tr>
+        <td><%=courses[i].name %></td>
+        <td><a href="/courses/<%= courses[i].id%>"><button>editar</button></a></td>
+        <td>
+            <form method="post" action="<%= courses[i].id %>?_method=delete">
+                <button type="submit" onclick="return confirm('Borrar manager:<% courses[i].name %>');">borrar</button>
+            </form>
+        </td>
+    </tr>
+    <% }%>
+</table>
+<p/>
+<a href="/courses"><button>Crear asignatura</button></a>

@@ -14,13 +14,14 @@ router.get('/', function(req, res, next) {
 });
 
 // /courses routes definition
+router.param('id', courseController.load);
 router.get('/courses', courseController.new);
 router.post('/courses', courseController.create);
-
 router.get('/courses/all', courseController.show);
-
+router.get('/courses/:id', courseController.edit);
 router.put('/courses/:id', courseController.update);
 router.delete('/courses/:id', courseController.destroy);
+
 
 /* students */
 router.get('/students/new', studentController.new);
@@ -37,12 +38,13 @@ router.post('/login', sessionController.create); //hacer login
 router.get('/logout', sessionController.destroy); //hacer logout
 
 
-router.param('id', managerController.load);
+//Definición de rutas de manager
+//router.param('id', managerController.load);
 router.get('/manager', managerController.index);
 router.get('/manager/new', managerController.new);
 router.post('/manager/create', managerController.create);
-router.get('/manager/:id(\\d)/edit', managerController.edit);
-router.put('/manager/:id(\\d)', managerController.update);
-router.delete('/manager/:id(\\d)/delete/', managerController.destroy);
+router.get('/manager/edit', managerController.edit);
+router.put('/manager/', managerController.update);
+router.delete('/manager/delete/', managerController.destroy);
 
 module.exports = router;

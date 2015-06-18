@@ -1,5 +1,7 @@
+<a href="/logout">Salir</a>
+<p>
 Edite sus datos <p>
 
-<form method="post" action="/manager/<%= manager.id %>?_method=put">
+<form method="post" action="/manager/?_method=put">
     <%=include _form.ejs %>
 </form>
