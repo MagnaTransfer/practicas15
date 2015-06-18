@@ -26,8 +26,8 @@ app.use(partials());
 app.use(methodOverride('_method'));
 app.use(cookieParser('Practicas 15'));
 app.use(session({
-    //secret: cookie_secret,
-    //name: cookie_name,
+    secret: 'cookie_secret',
+    name: 'cookie_name',
     //store: sessionStore, // connect-mongo session store
     proxy: true,
     resave: true,
@@ -41,6 +41,7 @@ app.use(function (req, res, next) {
   //guardar path en session.redir para despues de login
   if (!req.path.match(/\/login|\/logout/)) {
     req.session.redir = req.path;
+
   }
 
   //hacer visible req.session en las vistas
