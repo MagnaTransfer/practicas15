@@ -6,9 +6,12 @@ var studentController = require('../controllers/studentController.js');
 var sessionController = require('../controllers/sessionController');
 var userController = require('../controllers/userController');
 
-/* Página de entrada GET home page. */
+/* Pagina de entrada GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', {title: 'Express', errors: []});
+    res.render('index', {
+        title: 'Express',
+        errors: []
+    });
 });
 
 // /courses routes definition
@@ -23,13 +26,14 @@ router.get('/courses/:courseId', courseController.course);
 router.post('/courses/pick', courseController.pick);
 
 /* students */
-router.get('/students/new', studentController.new);
 router.get('/students', studentController.index);
+router.get('/students/new', studentController.new);
 router.post('/students', studentController.create);
-router.get('/students/:userId(\\d+)/edit', studentController.edit);
-router.put('/students/:userId(\\d+)', studentController.update);
-router.delete('/students/:userId(\\d+)', studentController.destroy);
-router.get('/students/mycourses', studentController.courses);
+router.delete('/students', studentController.destroy);
+router.get('/students/edit', studentController.edit);
+router.put('/students', studentController.update);
+router.get('/students/mycourses', sessionController.loginRequired, 
+    sessionController.roleRequired("STUDENT"), studentController.courses);
 
 
 //Definicion de rutas de sesion
@@ -38,20 +42,22 @@ router.post('/login', sessionController.create); //hacer login
 router.get('/logout', sessionController.destroy); //hacer logout
 
 
-//Definición de rutas de manager
+//Definicion de rutas de manager
 //router.param('id', managerController.load);
-router.get('/manager', managerController.index);
-router.get('/manager/new', managerController.new);
-router.post('/manager/create', managerController.create);
-router.get('/manager/edit', managerController.edit);
-router.put('/manager/', managerController.update);
-router.delete('/manager/delete/', managerController.destroy);
+router.get('/managers', managerController.index);
+router.get('/managers/new', managerController.new);
+router.post('/managers/create', managerController.create);
+router.get('/managers/edit', managerController.edit);
+router.put('/managers/', managerController.update);
+router.delete('/managers/delete/', managerController.destroy);
 
 // /user routes definition
 router.param('userId', userController.load);
 router.get('/users', userController.index);
-router.get('/users/new', function (req, res) {
-    res.render('users/new', {errors: []})
+router.get('/users/new', function(req, res) {
+    res.render('users/new', {
+        errors: []
+    })
 });
 router.delete('/users/:userId(\\d)', userController.destroy);
 
