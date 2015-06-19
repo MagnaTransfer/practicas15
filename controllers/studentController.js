@@ -20,8 +20,12 @@
 
 var models = require('../models/models.js');
 
-// GET /students/new
+// GET /students
+exports.index = function(req, res) {
+    res.render('students/index');
+};
 
+// GET /students/new
 exports.new = function(req, res, next) {
     var user = models.User.build({});
     var student = models.Student.build({});
@@ -32,7 +36,6 @@ exports.new = function(req, res, next) {
 };
 
 // POST /students
-
 exports.create = function(req, res, next) {
     var user = models.User.build({
         email: req.body.user.email,
@@ -40,115 +43,134 @@ exports.create = function(req, res, next) {
         role: "STUDENT",
     });
 
-    user.validate().then(function(err) {
-        if (err)
-            res.write(err.message);
-        else
-            user.save().then(function() {
-                var student = models.Student.build({
-                    name: req.body.student.name,
-                    surname: req.body.student.surname,
-                    year: req.body.student.year,
-                    avgGrade: req.body.student.avgGrade,
-                    credits: req.body.student.credits,
-                    specialisation: req.body.student.specialisation,
-                });
+    var student = models.Student.build({
+        name: req.body.student.name,
+        surname: req.body.student.surname,
+        year: req.body.student.year,
+        avgGrade: req.body.student.avgGrade,
+        credits: req.body.student.credits,
+        specialisation: req.body.student.specialisation,
+    });
 
-                student.validate().then(function(err) {
-                    if (err)
-                        res.write(err.message);
-                    else
+    user.validate().then(function(err) {
+        if (err) {
+            res.render('students/new', {
+                user: user,
+                student: student,
+                errors: err.errors,
+            });
+        }
+        else {
+            student.validate().then(function(err) {
+                if (err) {
+                    res.render('students/new', {
+                        user: user,
+                        student: student,
+                        errors: err.errors,
+                    });
+                }
+                else {
+                    user.save().then(function() {
                         student.save().then(function() {
                             student.setUser(user).then(function() {
                                 res.redirect('/');
                             });
                         });
-                }).catch(function(error) {
-                    console.log(error);
-                });
+                    }).catch(function(error) {
+                        next(error);
+                    });
+                }
             });
+        }
     }).catch(function(error) {
-        console.log(error);
+        next(error);
     });
 
 };
 
-// DELETE /students/
-
+// DELETE /students
 exports.destroy = function(req, res, next) {
     models.User.findById(req.session.user.id).then(function(user) {
-        user.destroy().then(function() {
-            res.redirect('/logout');
-        }).catch(function(error) {
-            next(error);
-        });
+        if (user) {
+            user.destroy().then(function() {
+                res.redirect('/logout');
+            }).catch(function(error) {
+                next(error);
+            });
+        }
+        else {
+            next(new Error('Usuario no encontrado.'));
+        }
+    }).catch(function(error) {
+        next(error);
     });
 };
 
 // GET /students/edit
-
-exports.edit = function(req, res) {
-    models.User.findById(req.session.user.id).then(function (user) {
-        user.getStudent().then(function(student) {
-            res.render('students/edit', {
-                student: student,
-                user: user,
-            });
-        });
-    });
-};
-
-// PUT /students/
-
-exports.update = function(req, res) {
+exports.edit = function(req, res, next) {
     models.User.findById(req.session.user.id).then(function(user) {
-        user.getStudent().then(function(student) {
-            student.name = req.body.student.name;
-            student.surname = req.body.student.surname;
-            student.year = req.body.student.year;
-            student.avgGrade = req.body.student.avgGrade;
-            student.credits = req.body.student.credits;
-            student.specialisation = req.body.student.specialisation;
-
-            student.validate().then(function(err) {
-                if (err)
-                /* TODO control de error */
-                ;
-                else
-                    student.save().then(function() {
-                        res.redirect( /* TODO redireccion */ '/students');
-                    });
+        if (user) {
+            user.getStudent().then(function(student) {
+                res.render('students/edit', {
+                    student: student,
+                    user: user,
+                });
             });
-        });
+        }
+        else {
+            next(new Error('Usuario inexistente.'));
+        }
+    }).catch(function(error) {
+        next(error);
     });
 };
 
-// GET /students
+// PUT /students
+exports.update = function(req, res, next) {
+    models.User.findById(req.session.user.id).then(function(user) {
+        if (user) {
+            user.getStudent().then(function(student) {
+                student.name = req.body.student.name;
+                student.surname = req.body.student.surname;
+                student.year = req.body.student.year;
+                student.avgGrade = req.body.student.avgGrade;
+                student.credits = req.body.student.credits;
+                student.specialisation = req.body.student.specialisation;
 
-exports.index = function(req, res) {
-    models.Student.findAll({
-        include: [{
-            model: models.User,
-        }],
-    }).then(function(students) {
-        res.render('students/index', {
-            students: students,
-        });
+                student.validate().then(function(err) {
+                    if (err)
+                    /* TODO control de error */
+                    ;
+                    else
+                        student.save().then(function() {
+                            res.redirect( /* TODO redireccion */ '/students');
+                        });
+                });
+            });
+        }
+        else {
+            next(new Error('Usuario inexistente.'));
+        }
+    }).catch(function(error) {
+        next(error);
     });
 };
 
 // GET /students/mycourses
-
-exports.courses = function(req, res) {
-    models.User.findById(req.session.user.id).then(function (user) {
-        user.getStudent().then(
-            function (student) {
-                student.getCourses().then(function (courses) {
-                    res.render('students/courses', {
-                        courses: courses,
-                        errors: [],
-                    });
+exports.courses = function(req, res, next) {
+    models.Student.findById(req.session.user.id).then(function(user) {
+        if (user) {
+            user.getCourses().then(function(courses) {
+                res.render('students/courses', {
+                    courses: courses,
+                    errors: [],
+                });
             });
-        });
+        }
+        else {
+            next(new Error('Usuario inexistente'));
+        }
+    }).catch(function(error) {
+        next(error);
     });
 };
