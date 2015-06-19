@@ -1,13 +1,11 @@
-<% for(index in courses){ %>
-<% course = courses[index]; %>
-<form method="post" action="/courses/<%= courses[index].id %>?_method=put">
-    <% include _form.ejs %>
-</form>
-
-<form method="post" action="/courses/<%= courses[index].id %>?_method=delete">
-    <button type="submit" onClick="return confirm('Eliminar asignatura: <% courses[index].name %>');">
-        Eliminar asignatura
-    </button>
-</form>
-
-<% } %>
+<div>
+    <h3><%= course.name %> - <%= course.specialisation %></h3>
+    <h4>Créditos: <%= course.credits %></h4>
+    <p><%= course.description %></p>
+    <% if (session.user.role === "STUDENT") { %>
+        <form method="post" action="/courses/pick">
+            <input type="hidden" name="cid" value="<%= course.id %>" />
+            <input type="submit" value="Inscribirse" />
+        </form>
+    <% } %>
+</div>
