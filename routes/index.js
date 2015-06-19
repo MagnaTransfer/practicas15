@@ -6,15 +6,17 @@ var studentController = require('../controllers/studentController.js');
 var sessionController = require('../controllers/sessionController');
 var userController = require('../controllers/userController');
 
-/* Pï¿½gina de entrada GET home page. */
+/* Página de entrada GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', {title: 'Express', errors: []});
 });
 
 // /courses routes definition
+router.param('id', courseController.load);
 router.get('/courses', courseController.new);
 router.post('/courses', courseController.create);
 router.get('/courses/all', courseController.show);
+router.get('/courses/:id', courseController.edit);
 router.put('/courses/:id', courseController.update);
 router.delete('/courses/:id', courseController.destroy);
 router.get('/courses/:courseId', courseController.course);
@@ -35,14 +37,15 @@ router.get('/login', sessionController.new); // formulario login, muestra la pag
 router.post('/login', sessionController.create); //hacer login
 router.get('/logout', sessionController.destroy); //hacer logout
 
-// /manager routes definition
-router.param('id', managerController.load);
-router.get('/managers', managerController.index);
-router.get('/managers/new', managerController.new);
-router.post('/managers/create', managerController.create);
-router.get('/managers/:id(\\d)/edit', managerController.edit);
-router.put('/managers/:id(\\d)', managerController.update);
-router.delete('/managers/:id(\\d)/delete/', managerController.destroy);
+
+//Definición de rutas de manager
+//router.param('id', managerController.load);
+router.get('/manager', managerController.index);
+router.get('/manager/new', managerController.new);
+router.post('/manager/create', managerController.create);
+router.get('/manager/edit', managerController.edit);
+router.put('/manager/', managerController.update);
+router.delete('/manager/delete/', managerController.destroy);
 
 // /user routes definition
 router.param('userId', userController.load);

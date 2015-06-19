@@ -48,31 +48,37 @@ exports.create = function (req, res) {
 };
 
 exports.edit = function (req, res) {
-    var manager = req.manager;
-    res.render('managers/edit.ejs', {manager: manager, errors: []});
+    models.User.findById(req.session.user.id).then(function(manager) {
+        res.render('managers/edit.ejs', {manager: manager, errors: []});
+    });
+
 }
 
 exports.update = function (req, res) {
-    req.manager.email = req.body.manager.email;
-    req.manager.password = req.body.manager.password;
+    models.User.findById(req.session.user.id).then(function(manager){
+        manager.email=req.body.manager.email;
+        manager.password=req.body.manager.password;
+        manager.validate().then(function (err) {
+                if (err) {
+                    res.render('/manager/', {manager: req.session.manager, errors: err.errors});
+                }
+                else {
+                    manager.save({fields: ["email", "password"]}).then(function () {
+                        res.redirect('/manager/');
+                    });
+                }
+            }
+        );
+    })
 
-    req.manager.validate().then(function (err) {
-            if (err) {
-                res.render('/managers/', {manager: req.manager, errors: err.errors});
-            }
-            else {
-                req.manager.save({fields: ["email", "password"]}).then(function () {
-                    res.redirect('/');
-                });
-            }
-        }
-    );
 };
 
 exports.destroy = function (req, res) {
-    req.manager.destroy().then(function () {
-        res.redirect('/');
-    }).catch(function (error) {
-        next:(error)
+    models.User.findById(req.session.user.id).then(function(manager) {
+        manager.destroy().then(function () {
+            res.redirect('/logout');
+        }).catch(function (error) {
+            next:(error)
+        });
     });
 };

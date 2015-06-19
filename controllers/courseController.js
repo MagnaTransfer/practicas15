@@ -1,5 +1,24 @@
 var models = require('../models/models.js');
 
+
+
+exports.load = function (req, res, next, id) {
+    models.Course.find({
+        where: {
+            id: Number(id)
+        }
+    }).then(function (course) {
+        if (course) {
+            req.course = course;
+            next();
+        } else {
+            next(new Error('No existe id=' + id))
+        }
+    }).catch(function (error) {
+        next(error)
+    });
+};
+
 // GET /courses
 exports.new = function(req, res) {
     var course = models.Course.build({
@@ -43,6 +62,15 @@ exports.create = function(req, res, next) {
     });
 };
 
+exports.edit = function(req,res){
+    var course = req.course;
+    res.render('courses/edit', {
+        course : course,
+        errors : []
+    });
+
+};
+
 // PUT /courses/:id
 exports.update = function(req, res, next) {
     req.course.name = req.body.course.name;
@@ -54,17 +82,11 @@ exports.update = function(req, res, next) {
     req.course.validate().then(
         function(err) {
             if (err) {
-                res.render('courses/' + req.course.id, {
-                    user: req.user,
-                    errors: err.errors
-                });
-            }
-            else {
-                req.course.save({
-                    fields: ["name", "description", "specialisation", "credits", "vacancies"]
-                }).then(
-                    function() {
-                        res.redirect('/');
+                res.render('courses/' + req.course.id, {errors: err.errors});
+            } else {
+                req.course.save({fields: ["name", "description", "specialisation", "credits", "vacancies"]}).then(
+                    function () {
+                        res.redirect('/courses/all');
                     }
                 );
             }
