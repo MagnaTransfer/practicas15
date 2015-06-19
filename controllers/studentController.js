@@ -60,7 +60,7 @@ exports.create = function(req, res, next) {
                     else
                         student.save().then(function() {
                             student.setUser(user).then(function() {
-                                res.redirect('/student');
+                                res.redirect( /* TODO redireccion */ '/students');
                             });
                         });
                 }).catch(function(error) {
@@ -73,22 +73,22 @@ exports.create = function(req, res, next) {
 
 };
 
-// DELETE /students/:userId
+// DELETE /students/
 
 exports.destroy = function(req, res, next) {
-    models.User.findById(req.params.userId).then(function(user) {
+    models.User.findById(req.session.user.id).then(function(user) {
         user.destroy().then(function() {
-            res.redirect( /* TODO redireccion */ );
+            res.redirect('/logout');
         }).catch(function(error) {
             next(error);
         });
     });
 };
 
-// GET /students/:userId/edit
+// GET /students/edit
 
 exports.edit = function(req, res) {
-    models.User.findById(req.params.userId).then(function(user) {
+    models.User.findById(req.session.user.d).then(function(user) {
         user.getStudent().then(function(student) {
             res.render('students/edit', {
                 student: student,
@@ -98,10 +98,10 @@ exports.edit = function(req, res) {
     });
 };
 
-// PUT /students/:userId
+// PUT /students/
 
 exports.update = function(req, res) {
-    models.User.findById(req.params.userId).then(function(user) {
+    models.User.findById(req.session.user.id).then(function(user) {
         user.getStudent().then(function(student) {
             student.name = req.body.student.name;
             student.surname = req.body.student.surname;
@@ -116,7 +116,7 @@ exports.update = function(req, res) {
                 ;
                 else
                     student.save().then(function() {
-                        res.redirect( /* TODO redireccion */ );
+                        res.redirect( /* TODO redireccion */ '/students');
                     });
             });
         });
@@ -135,4 +135,17 @@ exports.index = function(req, res) {
             students: students,
         });
     });
-}
+};
+
+// GET /students/mycourses
+
+exports.courses = function(req, res) {
+    models.Student.findById(req.session.user.id).then(function(user) {
+        user.getCourses().then(function(courses) {
+            res.render('students/courses', {
+                courses: courses,
+                errors: [],
+            });
+        });
+    });
+};

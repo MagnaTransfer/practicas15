@@ -8,7 +8,7 @@ var studentController = require('../controllers/studentController.js');
 
 var sessionController = require('../controllers/sessionController');
 
-/* Página de entrada GET home page. */
+/* Pï¿½gina de entrada GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', {title: 'Express', errors: []});
 });
@@ -16,11 +16,11 @@ router.get('/', function(req, res, next) {
 // /courses routes definition
 router.get('/courses', courseController.new);
 router.post('/courses', courseController.create);
-
 router.get('/courses/all', courseController.show);
-
 router.put('/courses/:id', courseController.update);
 router.delete('/courses/:id', courseController.destroy);
+router.get('/courses/:courseId', courseController.course);
+router.post('/courses/pick', courseController.pick);
 
 /* students */
 router.get('/students/new', studentController.new);
@@ -29,6 +29,7 @@ router.post('/students', studentController.create);
 router.get('/students/:userId(\\d+)/edit', studentController.edit);
 router.put('/students/:userId(\\d+)', studentController.update);
 router.delete('/students/:userId(\\d+)', studentController.destroy);
+router.get('/students/mycourses', studentController.courses);
 
 
 //Definicion de rutas de sesion

@@ -22,7 +22,6 @@ module.exports = function(sequelize, DataTypes) {
     return sequelize.define('Student_Course', {
         student_id: {
             type: DataTypes.INTEGER,
-            unique: 'item_tag_taggable'
         },
         student_priority: {
             type: DataTypes.INTEGER,
@@ -32,8 +31,6 @@ module.exports = function(sequelize, DataTypes) {
         },
         course_id: {
             type: DataTypes.INTEGER,
-            unique: 'item_tag_taggable',
-            references: null
         }
     });
 }
