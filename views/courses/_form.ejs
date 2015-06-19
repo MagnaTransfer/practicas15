@@ -1,22 +1,24 @@
-<label for="name">Nombre:</label>
-<input type="text" id="name" name="course[name]" value="<%= course.name %>"/> <br>
-<label for="description">Descripción:</label>
-<input type="text" id="description" name="course[description]" value="<%= course.description %>"/> <br>
-<label for="specialisation">Especialidad:</label><br>
-<input type="radio" id="specialisation" name="course[specialisation]" value="IS"
-       <% if(course.specialisation === "IS"){ %>checked
-        <% } %>
-        /> Ingeniería de Software <br>
-<input type="radio" id="specialisation" name="course[specialisation]" value="IC"
-       <% if(course.specialisation === "IC"){ %>checked
-        <% } %>
-        /> Ingeniería de Computadores<br>
-<input type="radio" id="specialisation" name="course[specialisation]" value="C"
-       <% if(course.specialisation === "C"){ %>checked
-        <% } %>
-        /> Computación<br>
-<label for="credits">Número de créditos:</label>
-<input type="text" id="credits" name="course[credits]" value="<%= course.credits %>"/> <br>
-<label for="vacancies">Número de plazas:</label>
-<input type="text" id="vacancies" name="course[vacancies]" value="<%= course.vacancies %>"/> <br>
-<input type="submit" value="Aceptar">
+<fieldset>
+    <legend>Información de la asignatura</legend>
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" name="course[name]" value="<%= course.name %>" required/> <br>
+    <label for="description">Descripción:</label>
+    <input type="text" id="description" name="course[description]" value="<%= course.description %>" required/> <br>
+    <label for="specialisation">Especialidad:</label><br>
+    <input type="radio" id="specialisation" name="course[specialisation]" value="IS"
+           <% if(course.specialisation === "IS"){ %>checked
+            <% } %>
+            /> Ingeniería de Software <br>
+    <input type="radio" id="specialisation" name="course[specialisation]" value="IC"
+           <% if(course.specialisation === "IC"){ %>checked
+            <% } %>
+            /> Ingeniería de Computadores<br>
+    <input type="radio" id="specialisation" name="course[specialisation]" value="C"
+           <% if(course.specialisation === "C"){ %>checked
+            <% } %>
+            /> Computación<br>
+    <label for="credits">Número de créditos:</label>
+    <input type="number" id="credits" name="course[credits]" value="<%= course.credits %>"/> <br>
+    <label for="vacancies">Número de plazas:</label>
+    <input type="number" id="vacancies" name="course[vacancies]" value="<%= course.vacancies %>"/> <br>
+</fieldset>

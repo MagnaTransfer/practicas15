@@ -19,6 +19,9 @@
         <% if(session.user.role === "ADMIN"){ %>
         <span><a href="/users">Usuarios</a></span>
         <% } %>
+        <% if(session.user.role === ("ADMIN" || "MANAGER")){ %>
+        <span><a href="/courses">Asignaturas</a></span>
+        <% } %>
         <% }else{ %>
         <span><a href="/login">Login</a></span>
         <% } %>
@@ -34,6 +37,7 @@
         <% } %>
 
         <div><%- body %></div>
+        <br>
     </section>
 
     <footer class="main" id="f1">

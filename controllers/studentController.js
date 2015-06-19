@@ -88,7 +88,7 @@ exports.destroy = function(req, res, next) {
 // GET /students/edit
 
 exports.edit = function(req, res) {
-    models.User.findById(req.session.user.d).then(function(user) {
+    models.User.findById(req.session.user.id).then(function (user) {
         user.getStudent().then(function(student) {
             res.render('students/edit', {
                 student: student,
@@ -140,11 +140,14 @@ exports.index = function(req, res) {
 // GET /students/mycourses
 
 exports.courses = function(req, res) {
-    models.Student.findById(req.session.user.id).then(function(user) {
-        user.getCourses().then(function(courses) {
-            res.render('students/courses', {
-                courses: courses,
-                errors: [],
+    models.User.findById(req.session.user.id).then(function (user) {
+        user.getStudent().then(
+            function (student) {
+                student.getCourses().then(function (courses) {
+                    res.render('students/courses', {
+                        courses: courses,
+                        errors: [],
+                    });
             });
         });
     });

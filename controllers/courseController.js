@@ -1,7 +1,7 @@
 var models = require('../models/models.js');
 
 
-
+//Autoload
 exports.load = function (req, res, next, id) {
     models.Course.find({
         where: {
@@ -19,7 +19,7 @@ exports.load = function (req, res, next, id) {
     });
 };
 
-// GET /courses
+// GET /courses/new
 exports.new = function(req, res) {
     var course = models.Course.build({
         name: "",
@@ -52,7 +52,7 @@ exports.create = function(req, res, next) {
                 }).then(
                     function() {
                         console.log("usuario guardado correctamente");
-                        res.redirect('/');
+                        res.redirect('/courses');
                     }
                 );
             }
@@ -62,11 +62,12 @@ exports.create = function(req, res, next) {
     });
 };
 
-exports.edit = function(req,res){
+// GET /courses/:id/edit
+exports.edit = function (req, res) {
     var course = req.course;
     res.render('courses/edit', {
-        course : course,
-        errors : []
+        course: course,
+        errors: []
     });
 
 };
@@ -86,7 +87,7 @@ exports.update = function(req, res, next) {
             } else {
                 req.course.save({fields: ["name", "description", "specialisation", "credits", "vacancies"]}).then(
                     function () {
-                        res.redirect('/courses/all');
+                        res.redirect('/courses');
                     }
                 );
             }
@@ -99,14 +100,14 @@ exports.update = function(req, res, next) {
 // DELETE /courses/:id
 exports.destroy = function(req, res, next) {
     req.course.destroy().then(function() {
-        res.redirect('/');
+        res.redirect('/courses/');
     }).catch(function(error) {
         next(error);
     });
 };
 
-// GET /courses/all
-exports.show = function(req, res) {
+// GET /courses
+exports.index = function (req, res) {
     models.Course.findAll().then(function(courses) {
         res.render('courses/index', {
             courses: courses,
@@ -116,12 +117,10 @@ exports.show = function(req, res) {
 };
 
 // GET /courses/:courseId
-exports.course = function(req, res) {
-    models.Course.findById(req.params.courseId).then(function(course) {
-        res.render('courses/show', {
-            course: course,
-            errors: []
-        });
+exports.show = function (req, res) {
+    res.render('courses/show', {
+        course: req.course,
+        errors: []
     });
 };
 

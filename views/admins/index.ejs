@@ -7,15 +7,15 @@
                 <button> Editar</button>
             </a></td>
         <td>
-            <form method="post" action="/manager/delete/?_method=delete ">
-                <button type="submit" onclick=" return confirm('Borrar manager:<% session.user.email %>');">borrar
-                    manager
+            <form method="post" action="/admins/delete/?_method=delete ">
+                <button type="submit" onclick=" return confirm('Borrar administrador:<% session.user.email %>');">borrar
+                    administrador
                 </button>
             </form>
         </td>
     </tr>
     <tr>
-        <a href=" /courses/all">
+        <a href=" /courses">
             <button>Administrar asignaturas</button>
         </a>
     </tr>

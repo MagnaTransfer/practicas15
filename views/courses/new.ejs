@@ -1,7 +1,8 @@
-<a href="/logout">Salir</a>
-<p>
-Crear asignatura: <p>
-
+<p>Crear asignatura</p>
 <form method="post" action="/courses">
     <% include _form.ejs %>
+    <input type="submit" value="Crear"/>
+    <a href="/courses">
+        <button type="button">Cancelar</button>
+    </a>
 </form>

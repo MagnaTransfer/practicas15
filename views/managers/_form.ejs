@@ -1,6 +1,11 @@
-<label for="email" class="rem">Email:</label>
-<input type="text" id="email" name="manager[email]" value="email"/> <p>
-<label for="password" class="password">Password:</label>
-<input type="password" id="password" name="manager[password]" value="<%= manager.password %>"/> <p>
-<a href="/manager"><button type="button">Cancelar</button></a>
-<input type="submit" value="Guardar">
+<fieldset>
+    <legend>Información de gestor académico</legend>
+    <div>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="manager[email]" value="<%= manager.email %>"/>
+    </div>
+    <div>
+        <label for="password" class="password">Password:</label>
+        <input type="password" id="password" name="manager[password]" value="<%= manager.password %>"/>
+    </div>
+</fieldset>

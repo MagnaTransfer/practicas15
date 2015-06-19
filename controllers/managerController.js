@@ -31,7 +31,7 @@ exports.index = function (req, res) {
 
 exports.new = function (req, res) {
     var manager = models.User.build(
-        {email: "email", password: "password"}
+        {email: "", password: ""}
     );
     res.render('managers/new.ejs', {manager: manager});
 };
@@ -48,16 +48,16 @@ exports.create = function (req, res) {
 };
 
 exports.edit = function (req, res) {
-    models.User.findById(req.session.user.id).then(function(manager) {
+    models.User.findById(req.session.user.id).then(function (manager) {
         res.render('managers/edit.ejs', {manager: manager, errors: []});
     });
 
 }
 
 exports.update = function (req, res) {
-    models.User.findById(req.session.user.id).then(function(manager){
-        manager.email=req.body.manager.email;
-        manager.password=req.body.manager.password;
+    models.User.findById(req.session.user.id).then(function (manager) {
+        manager.email = req.body.manager.email;
+        manager.password = req.body.manager.password;
         manager.validate().then(function (err) {
                 if (err) {
                     res.render('/manager/', {manager: req.session.manager, errors: err.errors});
@@ -74,7 +74,7 @@ exports.update = function (req, res) {
 };
 
 exports.destroy = function (req, res) {
-    models.User.findById(req.session.user.id).then(function(manager) {
+    models.User.findById(req.session.user.id).then(function (manager) {
         manager.destroy().then(function () {
             res.redirect('/logout');
         }).catch(function (error) {

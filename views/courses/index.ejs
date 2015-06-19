@@ -1,13 +1,26 @@
+<% if (session.user.role === "MANAGER" || session.user.role === "ADMIN") { %>
+<a href="courses/new">Crear asigantura</a> <br><br>
+<% } %>
 <% for(index in courses){ %>
 <% course = courses[index]; %>
-<form method="post" action="/courses/<%= courses[index].id %>?_method=put">
-    <% include _form.ejs %>
+<a href="/courses/<%= courses[index].id %>">
+    <%= courses[index].name %><br>
+</a>
+<% if (session.user.role === "MANAGER" || session.user.role === "ADMIN") { %>
+<a href="/courses/<%= courses[index].id %>/edit">
+    <button>Editar</button>
+</a>
+<% } else { %>
+<form method="post" action="/courses/pick">
+    <input type="hidden" name="cid" value="<%= courses[index].id %>"/>
+    <input type="submit" value="Inscribirse"/>
 </form>
+<% } %>
 
 <form method="post" action="/courses/<%= courses[index].id %>?_method=delete">
     <button type="submit" onClick="return confirm('Eliminar asignatura: <% courses[index].name %>');">
         Eliminar asignatura
     </button>
 </form>
-
+<br>
 <% } %>
