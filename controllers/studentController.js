@@ -52,40 +52,49 @@ exports.create = function(req, res, next) {
         specialisation: req.body.student.specialisation,
     });
 
-    user.validate().then(function (err) {
-        if (err) {
-            res.render('students/new', {
-                user: user,
-                student: student,
-                errors: err.errors,
-            });
-        }
-        else {
-            student.validate().then(function (err) {
-                if (err) {
-                    res.render('students/new', {
-                        user: user,
-                        student: student,
-                        errors: err.errors,
-                    });
-                }
-                else {
-                    user.save().then(function () {
-                        student.save().then(function() {
-                            student.setUser(user).then(function() {
-                                res.redirect('/');
-                            });
+    if (req.body.condiciones === "aceptado") {
+        user.validate().then(function (err) {
+            if (err) {
+                res.render('students/new', {
+                    user: user,
+                    student: student,
+                    errors: err.errors,
+                });
+            }
+            else {
+                student.validate().then(function (err) {
+                    if (err) {
+                        res.render('students/new', {
+                            user: user,
+                            student: student,
+                            errors: err.errors,
                         });
-                    }).catch(function (error) {
-                        next(error);
-                    });
-                }
-            });
-        }
-    }).catch(function(error) {
-        next(error);
-    });
-
+                    }
+                    else {
+                        user.save().then(function () {
+                            student.save().then(function () {
+                                student.setUser(user).then(function () {
+                                    res.redirect('/');
+                                });
+                            });
+                        }).catch(function (error) {
+                            next(error);
+                        });
+                    }
+                });
+            }
+        }).catch(function (error) {
+            next(error);
+        });
+    } else {
+        var errors = [];
+        errors[0] = new Error('No se han aceptado los términos y condiciones de uso.');
+        res.render('students/new', {
+            user: user,
+            student: student,
+            errors: errors,
+        });
+    }
 };
 
 // DELETE /students

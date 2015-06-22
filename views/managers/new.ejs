@@ -3,6 +3,7 @@
 
     <form method="post" action="/managers">
         <% include _form.ejs %>
+        <% include ../users/_form.condiciones.ejs %>
         <input type="submit" value="Registrar"/>
         <a href="/managers">
             <button type="button">Cancelar</button>
