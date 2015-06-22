@@ -33,7 +33,7 @@ router.post('/students', studentController.create);
 router.delete('/students', studentController.destroy);
 router.get('/students/edit', studentController.edit);
 router.put('/students', studentController.update);
-router.get('/students/mycourses', sessionController.loginRequired, 
+router.get('/students/mycourses', sessionController.loginRequired,
     sessionController.roleRequired("STUDENT"), studentController.courses);
 
 
@@ -60,7 +60,7 @@ router.post('/admins', adminController.create);
 // /user routes definition
 router.param('userId', userController.load);
 router.get('/users', userController.index);
-router.get('/users/new', function(req, res) {
+router.get('/users/new', function (req, res) {
     res.render('users/new', {
         errors: []
     })

@@ -21,7 +21,7 @@
 var models = require('../models/models.js');
 
 // GET /students
-exports.index = function(req, res) {
+exports.index = function (req, res) {
     res.render('students/index');
 };
 
@@ -52,7 +52,7 @@ exports.create = function(req, res, next) {
         specialisation: req.body.student.specialisation,
     });
 
-    user.validate().then(function(err) {
+    user.validate().then(function (err) {
         if (err) {
             res.render('students/new', {
                 user: user,
@@ -61,7 +61,7 @@ exports.create = function(req, res, next) {
             });
         }
         else {
-            student.validate().then(function(err) {
+            student.validate().then(function (err) {
                 if (err) {
                     res.render('students/new', {
                         user: user,
@@ -70,13 +70,13 @@ exports.create = function(req, res, next) {
                     });
                 }
                 else {
-                    user.save().then(function() {
+                    user.save().then(function () {
                         student.save().then(function() {
                             student.setUser(user).then(function() {
                                 res.redirect('/');
                             });
                         });
-                    }).catch(function(error) {
+                    }).catch(function (error) {
                         next(error);
                     });
                 }
@@ -92,25 +92,25 @@ exports.create = function(req, res, next) {
 exports.destroy = function(req, res, next) {
     models.User.findById(req.session.user.id).then(function(user) {
         if (user) {
-            user.destroy().then(function() {
+            user.destroy().then(function () {
                 res.redirect('/logout');
-            }).catch(function(error) {
+            }).catch(function (error) {
                 next(error);
             });
         }
         else {
             next(new Error('Usuario no encontrado.'));
         }
-    }).catch(function(error) {
+    }).catch(function (error) {
         next(error);
     });
 };
 
 // GET /students/edit
-exports.edit = function(req, res, next) {
-    models.User.findById(req.session.user.id).then(function(user) {
+exports.edit = function (req, res, next) {
+    models.User.findById(req.session.user.id).then(function (user) {
         if (user) {
-            user.getStudent().then(function(student) {
+            user.getStudent().then(function (student) {
                 res.render('students/edit', {
                     student: student,
                     user: user,
@@ -120,16 +120,16 @@ exports.edit = function(req, res, next) {
         else {
             next(new Error('Usuario inexistente.'));
         }
-    }).catch(function(error) {
+    }).catch(function (error) {
         next(error);
     });
 };
 
 // PUT /students
-exports.update = function(req, res, next) {
+exports.update = function (req, res, next) {
     models.User.findById(req.session.user.id).then(function(user) {
         if (user) {
-            user.getStudent().then(function(student) {
+            user.getStudent().then(function (student) {
                 student.name = req.body.student.name;
                 student.surname = req.body.student.surname;
                 student.year = req.body.student.year;
@@ -137,13 +137,13 @@ exports.update = function(req, res, next) {
                 student.credits = req.body.student.credits;
                 student.specialisation = req.body.student.specialisation;
 
-                student.validate().then(function(err) {
+                student.validate().then(function (err) {
                     if (err)
                     /* TODO control de error */
-                    ;
+                        ;
                     else
-                        student.save().then(function() {
-                            res.redirect( /* TODO redireccion */ '/students');
+                        student.save().then(function () {
+                            res.redirect(/* TODO redireccion */ '/students');
                         });
                 });
             });
@@ -151,16 +151,16 @@ exports.update = function(req, res, next) {
         else {
             next(new Error('Usuario inexistente.'));
         }
-    }).catch(function(error) {
+    }).catch(function (error) {
         next(error);
     });
 };
 
 // GET /students/mycourses
-exports.courses = function(req, res, next) {
-    models.Student.findById(req.session.user.id).then(function(user) {
+exports.courses = function (req, res, next) {
+    models.Student.findById(req.session.user.id).then(function (user) {
         if (user) {
-            user.getCourses().then(function(courses) {
+            user.getCourses().then(function (courses) {
                 res.render('students/courses', {
                     courses: courses,
                     errors: [],
@@ -170,7 +170,7 @@ exports.courses = function(req, res, next) {
         else {
             next(new Error('Usuario inexistente'));
         }
-    }).catch(function(error) {
+    }).catch(function (error) {
         next(error);
     });
 };

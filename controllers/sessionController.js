@@ -1,5 +1,5 @@
 // MW de autorizacion de accesos HTTP restringidos
-exports.loginRequired = function(req, res, next) {
+exports.loginRequired = function (req, res, next) {
     if (req.session.user) {
         next();
     }
@@ -8,8 +8,8 @@ exports.loginRequired = function(req, res, next) {
     }
 };
 
-exports.roleRequired = function(role) {
-    return function(req, res, next) {
+exports.roleRequired = function (role) {
+    return function (req, res, next) {
         if (req.session.user.role === role) {
             next();
         }
@@ -21,7 +21,7 @@ exports.roleRequired = function(role) {
 };
 
 //Get /login  Formulario de login
-exports.new = function(req, res) {
+exports.new = function (req, res) {
     var errors = req.session.errors || {};
     req.session.errors = {};
 
@@ -31,13 +31,13 @@ exports.new = function(req, res) {
 };
 
 //POST login hacer el login
-exports.create = function(req, res) {
+exports.create = function (req, res) {
 
     var login = req.body.login;
     var password = req.body.password;
 
     var userController = require('./userController');
-    userController.autenticar(login, password, function(error, user) {
+    userController.autenticar(login, password, function (error, user) {
 
         if (error) { // si hay error, retornamos mensajes de error de sesion
             req.session.errors = [{
@@ -55,7 +55,7 @@ exports.create = function(req, res) {
 };
 
 // DELETE logout , hacer logout
-exports.destroy = function(req, res) {
+exports.destroy = function (req, res) {
     delete req.session.user;
     res.redirect("/"); // redirect a path anterior a login
 }
