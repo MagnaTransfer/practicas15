@@ -20,11 +20,6 @@
 
 var models = require('../models/models.js');
 
-// GET /students
-exports.index = function (req, res) {
-    res.render('students/index');
-};
-
 // GET /students/new
 exports.new = function(req, res, next) {
     var user = models.User.build({});

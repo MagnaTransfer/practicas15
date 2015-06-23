@@ -43,7 +43,6 @@ router.get('/courses/:courseId(\\d+)', courseController.show);
 router.post('/courses/pick', courseController.pick);
 
 /* students */
-router.get('/students', studentController.index);
 router.get('/students/new', studentController.new);
 router.post('/students', studentController.create);
 router.delete('/students', studentController.destroy);

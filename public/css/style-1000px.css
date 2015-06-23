@@ -8,7 +8,6 @@
 /* Basic                                                                         */
 /*********************************************************************************/
 
-	body,input,textarea,select
-	{
-		font-size: 10pt;
-	}
+body, input, textarea, select {
+    font-size: 10pt;
+}

@@ -2,17 +2,16 @@
 /* Basic                                                                         */
 /*********************************************************************************/
 
-	.button
-	{
-		/*
-		
-		For elements that use border-radius, add the following:
-		
-			-ms-behavior: url('css/ie/PIE.htc');
+.button {
+    /*
 
-		Note that PIE.htc requires its elements to be relative or absolute:
+    For elements that use border-radius, add the following:
 
-			position: relative;
+        -ms-behavior: url('css/ie/PIE.htc');
 
-		*/
-	}
+    Note that PIE.htc requires its elements to be relative or absolute:
+
+        position: relative;
+
+    */
+}
