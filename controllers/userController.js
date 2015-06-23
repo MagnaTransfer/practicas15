@@ -1,3 +1,21 @@
+/**
+ *   placeForMe -
+ *   Copyright (C) 2015 by Magna SIS <magnasis@magnasis.com>
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 //var users = {'uksmiss@gmail.com': {id: 1, email: "uksmiss@gmail.com", password: "1234"}};
 
 // Comprobar si el usuario esta registrado en users
@@ -10,7 +28,7 @@ var hasher = require('../libs/hasher.js')
 
 exports.autenticar = function (login, password, callback) {
 	models.User.findOne({
-		where: {email :login, password: password}
+		where: {email :login, password: hasher.encrypt(password)}
 	}).then(function(user){
 		
 		if(user){
@@ -60,6 +78,24 @@ exports.index = function (req, res) {
     }).catch(function (error) {
         next(error)
     });
+};
+
+exports.new = function (req, res) {
+    var user = models.User.build(
+        {email: "", password: ""}
+    );
+    res.render('users/new.ejs', {user: user});
+};
+
+exports.create = function (req, res) {
+    var user = models.User.build({
+        email: req.body.user.email,
+        password: hasher.encrypt(req.body.user.password),
+        role: req.body.user.role
+    });
+    user.save({fields: ["email", "password", "role"]}).then(function () {
+        res.redirect('/users');
+    })
 };
 
 exports.destroy = function (req, res) {

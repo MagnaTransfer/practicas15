@@ -1,15 +1,19 @@
 <div>
+    <div>
+        <a href="/users/new">Crear usuario</a>
+    </div>
     <ul>
-        <li>
-            <a href="/users/new">Crear usuario</a>
-        </li>
         <% var i; for (i = 0; i < users.length; i++) { %>
+        <% if(session.user.email !== users[i].email) { %>
         <li>
             <%= users[i].email %>
             <form method="post" action="/users/<%= users[i].id %>?_method=delete">
-                <input type="submit" value="Eliminar"/>
+                <input type="submit" value="Eliminar"
+                       onclick="return confirm('Eliminar usuario:<%= users[i].email %>');"/>
             </form>
         </li>
+        <br>
+        <% } %>
         <% } %>
     </ul>
 </div>

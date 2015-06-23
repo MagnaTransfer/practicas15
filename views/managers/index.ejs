@@ -3,11 +3,11 @@
 <table>
     <tr>
         <td> <%= session.user.email %> </td>
-        <td><a href="/managers/edit">
+        <td><a href="/manager/edit">
                 <button> Editar</button>
             </a></td>
         <td>
-            <form method="post" action="/managers/delete/?_method=delete ">
+            <form method="post" action="/manager/delete/?_method=delete ">
                 <button type="submit" onclick=" return confirm('Borrar manager:<% session.user.email %>');">borrar
                     manager
                 </button>
@@ -15,7 +15,7 @@
         </td>
     </tr>
     <tr>
-        <a href=" /courses/">
+        <a href=" /courses/all">
             <button>Administrar asignaturas</button>
         </a>
     </tr>

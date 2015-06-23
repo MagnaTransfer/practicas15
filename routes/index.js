@@ -1,11 +1,27 @@
+/**
+ *   placeForMe -
+ *   Copyright (C) 2015 by Magna SIS <magnasis@magnasis.com>
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 var express = require('express');
 var router = express.Router();
-var managerController = require('../controllers/managerController.js');
 var courseController = require('../controllers/courseController');
 var studentController = require('../controllers/studentController.js');
 var sessionController = require('../controllers/sessionController');
 var userController = require('../controllers/userController');
-var adminController = require('../controllers/adminController');
 
 /* Pagina de entrada GET home page. */
 router.get('/', function(req, res, next) {
@@ -40,44 +56,24 @@ router.put('/students', studentController.update);
 router.get('/students/mycourses', sessionController.loginRequired,
     sessionController.roleRequired("STUDENT"), studentController.courses);
 
-
 //Definicion de rutas de sesion
 router.get('/login', sessionController.new); // formulario login, muestra la pagina
 router.post('/login', sessionController.create); //hacer login
 router.get('/logout',sessionController.loginRequired, sessionController.destroy); //hacer logout
 
-
-
-//Definicion de rutas de manager
-//router.param('id', managerController.load);
-router.get('/managers',sessionController.loginRequired,
-    sessionController.roleRequired("MANAGER"), managerController.index);
-router.get('/managers/new',sessionController.logoutRequired ,managerController.new);
-router.post('/managers', managerController.create);
-router.get('/managers/edit',sessionController.loginRequired,
-    sessionController.roleRequired("MANAGER","ADMIN"), managerController.edit);
-router.put('/managers/', managerController.update);
-router.delete('/managers/delete/', managerController.destroy);
-
-// /admin routes definition
-router.get('/admins',sessionController.loginRequired,
-    sessionController.roleRequired("ADMIN"), adminController.index);
-router.get('/admins/new',sessionController.logoutRequired, adminController.new);
-router.post('/admins', adminController.create);
-
 // /user routes definition
 router.param('userId', userController.load);
-router.get('/users', userController.index);
-router.get('/users/new', function (req, res) {
-    res.render('users/new', {
-        errors: []
-    })
-});
-router.delete('/users/:userId(\\d+)', userController.destroy);
+router.get('/users',sessionController.loginRequired,
+    sessionController.roleRequired("ADMIN"), userController.index);
+router.get('/users/new',sessionController.loginRequired,
+    sessionController.roleRequired("ADMIN"), userController.new);
+router.post('/users', userController.create);
+router.delete('/users/:userId(\\d+)',sessionController.loginRequired,
+    sessionController.roleRequired("ADMIN"), userController.destroy);
 
-router.get('/forgot', userController.forgot);
+router.get('/forgot',sessionController.logoutRequired, userController.forgot);
 router.post('/forgot', userController.send);
-router.get('/reset', userController.reset);
+router.get('/reset',sessionController.logoutRequired, userController.reset);
 router.put('/reset', userController.change)
 
 module.exports = router;

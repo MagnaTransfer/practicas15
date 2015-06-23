@@ -1,7 +1,9 @@
 <% if (session.user.role === "MANAGER" || session.user.role === "ADMIN") { %>
 <a href="/courses/new">Crear asigantura</a> <br><br>
 <% } %>
+<ul>
 <% for(index in courses){ %>
+    <li>
 <% course = courses[index]; %>
 <a href="/courses/<%= courses[index].id %>">
     <%= courses[index].name %><br>
@@ -22,6 +24,7 @@
     <input type="submit" value="Inscribirse"/>
 </form>
 <% } %>
-
+</li>
 
 <% } %>
+</ul>
