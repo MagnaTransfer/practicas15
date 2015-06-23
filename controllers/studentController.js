@@ -160,7 +160,7 @@ exports.update = function (req, res, next) {
 exports.courses = function (req, res, next) {
     models.Student.findById(req.session.user.id).then(function (user) {
         if (user) {
-            user.getCourses().then(function (courses) {
+            user.getCourses({include: []}).then(function (courses) {
                 res.render('students/courses', {
                     courses: courses,
                     errors: [],

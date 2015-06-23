@@ -78,7 +78,7 @@ exports.destroy = function (req, res) {
         manager.destroy().then(function () {
             res.redirect('/logout');
         }).catch(function (error) {
-            next:(error)
+            next(error)
         });
     });
 };

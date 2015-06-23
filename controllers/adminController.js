@@ -1,31 +1,44 @@
 var models = require('../models/models.js');
 
-exports.index = function (req, res) {
-    models.User.find({
+// GET /admins
+exports.index = function(req, res, next) {
+    models.User.findAll({
         where: {
             role: "ADMIN"
         }
-    }).then(function (managers) {
-        res.render('admins/index.ejs', {admins: admins, errors: []});
-    }).catch(function (error) {
-        next(error)
+    }).then(function(admins) {
+        res.render('admins/index.ejs', {
+            admins: admins,
+            errors: []
+        });
+    }).catch(function(error) {
+        next(error);
     });
 };
 
-exports.new = function (req, res) {
-    var admin = models.User.build(
-        {email: "", password: ""}
-    );
-    res.render('admins/new.ejs', {admin: admin});
+// GET /admins/new
+exports.new = function(req, res) {
+    var admin = models.User.build({
+        email: "",
+        password: ""
+    });
+    res.render('admins/new.ejs', {
+        admin: admin
+    });
 };
 
-exports.create = function (req, res) {
+// POST /admins
+exports.create = function(req, res, next) {
     var admin = models.User.build({
         email: req.body.admin.email,
         password: req.body.admin.password,
         role: "ADMIN"
     });
-    admin.save({fields: ["email", "password", "role"]}).then(function () {
+    admin.save({
+        fields: ["email", "password", "role"]
+    }).then(function() {
         res.redirect('/');
-    })
+    }).catch(function(error) {
+        next(error);
+    });
 };

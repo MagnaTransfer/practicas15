@@ -50,6 +50,10 @@ module.exports = function(sequelize, DataTypes) {
         vacancies: {
             type: DataTypes.INTEGER,
             allowNull: false,
+        },
+        season: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
         }
     });
 }

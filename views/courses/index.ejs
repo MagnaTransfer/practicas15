@@ -11,8 +11,7 @@
     <button>Editar</button>
 </a>
 <% } else { %>
-<form method="post" action="/courses/pick">
-    <input type="hidden" name="cid" value="<%= courses[index].id %>"/>
+<form method="post" action="/courses/pick/<%= courses[index].id %>">
     <input type="submit" value="Inscribirse"/>
 </form>
 <% } %>

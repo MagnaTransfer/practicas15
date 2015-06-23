@@ -24,7 +24,8 @@ router.get('/courses/:courseId(\\d+)/edit', courseController.edit);
 router.put('/courses/:courseId(\\d+)', courseController.update);
 router.delete('/courses/:courseId(\\d+)', courseController.destroy);
 router.get('/courses/:courseId(\\d+)', courseController.show);
-router.post('/courses/pick', courseController.pick);
+router.post('/courses/pick/:courseId(\\d+)', courseController.pick);
+router.delete('/courses/unpick/:courseId(\\d+)', courseController.unpick);
 
 /* students */
 router.get('/students', studentController.index);
