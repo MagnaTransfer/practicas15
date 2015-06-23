@@ -1,4 +1,6 @@
 var models = require('../models/models.js');
+var hasher = require('../libs/hasher.js')
+
 
 exports.load = function (req, res, next, id) {
     models.User.find({
@@ -37,9 +39,10 @@ exports.new = function (req, res) {
 };
 
 exports.create = function (req, res) {
+    var encriptedPassword = hasher.encrypt(req.body.manager.password);
     var manager = models.User.build({
         email: req.body.manager.email,
-        password: req.body.manager.password,
+        password: encriptedPassword,
         role: "MANAGER"
     });
     manager.save({fields: ["email", "password", "role"]}).then(function () {
@@ -56,8 +59,9 @@ exports.edit = function (req, res) {
 
 exports.update = function (req, res) {
     models.User.findById(req.session.user.id).then(function (manager) {
+        var encriptedPassword = hasher.encrypt(req.body.manager.password);
         manager.email = req.body.manager.email;
-        manager.password = req.body.manager.password;
+        manager.password = encriptedPassword;
         manager.validate().then(function (err) {
                 if (err) {
                     res.render('/manager/', {manager: req.session.manager, errors: err.errors});

@@ -1,0 +1,15 @@
+<form method="post" action="/reset?_method=put">
+    <fieldset>
+        <legend>Introduce la nueva contraseña</legend>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" value="password"/>
+        </div>
+        <div>
+            <input type="hidden" id="id" name="id" value="<%= user.id %>"/>
+        </div>
+        <div>
+            <button type="submit">Enviar</button>
+        </div>
+    </fieldset>
+</form>

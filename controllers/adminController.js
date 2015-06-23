@@ -1,4 +1,6 @@
 var models = require('../models/models.js');
+var hasher = require('../libs/hasher.js')
+
 
 exports.index = function (req, res) {
     models.User.find({
@@ -22,7 +24,7 @@ exports.new = function (req, res) {
 exports.create = function (req, res) {
     var admin = models.User.build({
         email: req.body.admin.email,
-        password: req.body.admin.password,
+        password: hasher.encrypt(req.body.admin.password),
         role: "ADMIN"
     });
     admin.save({fields: ["email", "password", "role"]}).then(function () {

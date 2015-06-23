@@ -49,6 +49,10 @@ module.exports = function(sequelize, DataTypes) {
                     msg: "-> Falta Rol"
                 },
             },
+        },
+        resetCode: {
+            type: DataTypes.STRING,
+            allowNull : true
         }
     });
 }

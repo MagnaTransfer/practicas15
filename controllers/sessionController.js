@@ -1,3 +1,6 @@
+var hasher = require('../libs/hasher.js')
+
+
 // MW de autorizacion de accesos HTTP restringidos
 exports.loginRequired = function (req, res, next) {
     if (req.session.user) {
@@ -8,9 +11,18 @@ exports.loginRequired = function (req, res, next) {
     }
 };
 
-exports.roleRequired = function (role) {
+exports.logoutRequired = function (req,res,next){
+    if(req.session.user){
+        res.redirect('/');
+    }
+    else{
+        next();
+    }
+}
+
+exports.roleRequired = function (role1, role2) {
     return function (req, res, next) {
-        if (req.session.user.role === role) {
+        if (req.session.user.role === role1 || req.session.user.role === role2) {
             next();
         }
         else {
@@ -34,7 +46,7 @@ exports.new = function (req, res) {
 exports.create = function (req, res) {
 
     var login = req.body.login;
-    var password = req.body.password;
+    var password = hasher.encrypt(req.body.password);
 
     var userController = require('./userController');
     userController.autenticar(login, password, function (error, user) {

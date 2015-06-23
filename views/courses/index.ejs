@@ -1,5 +1,5 @@
 <% if (session.user.role === "MANAGER" || session.user.role === "ADMIN") { %>
-<a href="courses/new">Crear asigantura</a> <br><br>
+<a href="/courses/new">Crear asigantura</a> <br><br>
 <% } %>
 <% for(index in courses){ %>
 <% course = courses[index]; %>
@@ -9,6 +9,12 @@
 <% if (session.user.role === "MANAGER" || session.user.role === "ADMIN") { %>
 <a href="/courses/<%= courses[index].id %>/edit">
     <button>Editar</button>
+    <form method="post" action="/courses/<%= courses[index].id %>?_method=delete">
+        <button type="submit" onClick="return confirm('Eliminar asignatura: <% courses[index].name %>');">
+            Eliminar asignatura
+        </button>
+    </form>
+    <br>
 </a>
 <% } else { %>
 <form method="post" action="/courses/pick">
@@ -17,10 +23,5 @@
 </form>
 <% } %>
 
-<form method="post" action="/courses/<%= courses[index].id %>?_method=delete">
-    <button type="submit" onClick="return confirm('Eliminar asignatura: <% courses[index].name %>');">
-        Eliminar asignatura
-    </button>
-</form>
-<br>
+
 <% } %>

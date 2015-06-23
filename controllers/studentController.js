@@ -19,6 +19,7 @@
 // controllers/studentController.js
 
 var models = require('../models/models.js');
+var hasher = require('../libs/hasher.js')
 
 // GET /students
 exports.index = function (req, res) {
@@ -37,9 +38,10 @@ exports.new = function(req, res, next) {
 
 // POST /students
 exports.create = function(req, res, next) {
+    var encryptedPassword = hasher.encrypt(req.body.user.password);
     var user = models.User.build({
         email: req.body.user.email,
-        password: req.body.user.password,
+        password: encryptedPassword,
         role: "STUDENT",
     });
 
@@ -158,19 +160,24 @@ exports.update = function (req, res, next) {
 
 // GET /students/mycourses
 exports.courses = function (req, res, next) {
-    models.Student.findById(req.session.user.id).then(function (user) {
-        if (user) {
-            user.getCourses().then(function (courses) {
-                res.render('students/courses', {
-                    courses: courses,
-                    errors: [],
+    models.User.find(
+        {where:
+            {id: req.session.user.id},
+            include: [{model: models.Student}]}).
+        then(function (user) {
+            if (user) {
+                user.Student.getCourses().then(function (courses) {
+                    res.render('students/courses', {
+                        courses: courses,
+                        errors: [],
+                    });
                 });
-            });
-        }
-        else {
-            next(new Error('Usuario inexistente'));
-        }
-    }).catch(function (error) {
+            }
+            else {
+                console.log(user);
+                next(new Error('Usuario inexistente'));
+            }
+        }).catch(function (error) {
         next(error);
-    });
+        });
 };
