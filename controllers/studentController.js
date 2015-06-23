@@ -85,7 +85,7 @@ exports.create = function(req, res, next) {
         });
     } else {
         var errors = [];
-        errors[0] = new Error('No se han aceptado los tÃ©rminos y condiciones de uso.');
+        errors[0] = new Error('No se han aceptado los términos y condiciones de uso.');
         res.render('students/new', {
             user: user,
             student: student,

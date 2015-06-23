@@ -1,11 +1,22 @@
 <div>
     <h3><%= course.name %> - <%= course.specialisation %></h3>
     <h4>Créditos: <%= course.credits %></h4>
+    <span>Plazas: <%= course.vacancies%></span>
     <p><%= course.description %></p>
-    <% if (session.user.role === "STUDENT") { %>
-        <form method="post" action="/courses/pick">
-            <input type="hidden" name="cid" value="<%= course.id %>" />
+    <span>Alumnos inscritos: </span>
+    <ul>
+        <li>2º: <%= alumnos[2] %></li>
+        <li>3º: <%= alumnos[3] %></li>
+        <li>4º: <%= alumnos[4] %></li>
+    </ul>
+    <% if (session.user.role === "STUDENT" && !inscrito ) { %>
+        <form method="post" action="/courses/pick/<%= course.id %>">
             <input type="submit" value="Inscribirse" />
+        </form>
+    <% } else { %>
+        <span>Ya estas inscrito en esta asignatura.</span>
+        <form method="post" action="/courses/unpick/<%= course.id %>?_method=delete">
+            <input type="submit" value="Desinscribirse" />
         </form>
     <% } %>
     <a href="/courses">Volver</a>

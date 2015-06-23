@@ -64,7 +64,7 @@ Student.belongsToMany(Course, {
 });
 Course.belongsToMany(Student, {
     through: StudentCourse,
-    onDelete:'cascade'
+    onDelete: 'cascade'
 });
 
 exports.User = User;
@@ -73,16 +73,15 @@ exports.Course = Course;
 exports.StudentCourse = StudentCourse;
 
 sequelize.sync().then(function() {
-    /*
     User.create({
-        email: 'prueba1',
-        password: 'prueba1',
+        email: 'student',
+        password: 'student',
         role: 'STUDENT',
     }).then(function(user1) {
         Student.create({
             name: 'prueba1',
             surname: 'prueba1',
-            year: '1',
+            year: '2',
             avgGrade: '4',
             credits: '12',
             specialisation: 'IS',
@@ -90,6 +89,13 @@ sequelize.sync().then(function() {
             student1.setUser(user1);
         });
     });
-    */
+    Course.create({
+        name: 'AS1',
+        description: 'AS1 descripcion',
+        specialisation: 'IS',
+        credits: 6,
+        vacancies: 14,
+        season: '2014/2015',
+    });
     console.log('Base de datos abierta');
 });

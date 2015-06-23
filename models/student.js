@@ -40,6 +40,14 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
+                min: {
+                    args: 2,
+                    msg: "-> Curso minimo 2º",
+                },
+                max: {
+                    args: 4,
+                    msg: "-> Curso maximo 4º",
+                },
                 notEmpty: {
                     msg: "-> Falta Curso"
                 },

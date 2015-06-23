@@ -20,17 +20,17 @@
 
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define('Student_Course', {
-        student_id: {
-            type: DataTypes.INTEGER,
-        },
         student_priority: {
             type: DataTypes.INTEGER,
         },
         course_position: {
             type: DataTypes.INTEGER,
+            defaultValue: 0,
         },
-        course_id: {
-            type: DataTypes.INTEGER,
-        }
+    }, {
+        indexes: [{
+            method: 'BTREE',
+            fields: ['CourseId', 'course_position'],
+        }],
     });
 }
