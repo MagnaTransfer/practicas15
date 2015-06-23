@@ -21,11 +21,6 @@
 var models = require('../models/models.js');
 var hasher = require('../libs/hasher.js')
 
-// GET /students
-exports.index = function (req, res) {
-    res.render('students/index');
-};
-
 // GET /students/new
 exports.new = function(req, res, next) {
     var user = models.User.build({});

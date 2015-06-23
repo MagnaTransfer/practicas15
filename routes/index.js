@@ -45,8 +45,6 @@ router.get('/courses/:courseId(\\d+)',sessionController.loginRequired, courseCon
 router.post('/courses/pick', courseController.pick);
 
 /* students */
-router.get('/students',sessionController.loginRequired,
-    sessionController.roleRequired("STUDENT"), studentController.index);
 router.get('/students/new',sessionController.logoutRequired, studentController.new);
 router.post('/students', studentController.create);
 router.delete('/students', studentController.destroy);
