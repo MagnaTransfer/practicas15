@@ -77,6 +77,24 @@ exports.index = function (req, res) {
     });
 };
 
+exports.new = function (req, res) {
+    var user = models.User.build(
+        {email: "", password: ""}
+    );
+    res.render('users/new.ejs', {user: user});
+};
+
+exports.create = function (req, res) {
+    var user = models.User.build({
+        email: req.body.user.email,
+        password: req.body.user.password,
+        role: req.body.user.role
+    });
+    user.save({fields: ["email", "password", "role"]}).then(function () {
+        res.redirect('/users');
+    })
+};
+
 exports.destroy = function (req, res) {
     req.user.destroy().then(function () {
         res.redirect('/');

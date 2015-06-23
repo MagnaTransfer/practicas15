@@ -1,3 +1,11 @@
-<a href="/students/new">Nuevo estudiante</a>
-<a href="/managers/new">Nuevo gestor académico</a>
-<a href="/admins/new">Nuevo administrador</a>
+<div>
+    <h3>Registro de usuario:</h3>
+
+    <form method="post" action="/users">
+        <% include _form.ejs %>
+        <input type="submit" value="Registrar"/>
+        <a href="/users">
+            <button type="button">Cancelar</button>
+        </a>
+    </form>
+</div>

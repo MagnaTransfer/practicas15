@@ -15,13 +15,13 @@
     <nav class="main" id="n1" role="navigation">
         <span><a href="/">Inicio</a></span>
         <% if(session.user){ %>
-        <span><a href="/logout">Logout</a></span>
         <% if(session.user.role === "ADMIN"){ %>
         <span><a href="/users">Usuarios</a></span>
         <% } %>
-        <% if(session.user.role === ("ADMIN" || "MANAGER")){ %>
+        <% if(session.user.role === "ADMIN" || session.user.role === "MANAGER"){ %>
         <span><a href="/courses">Asignaturas</a></span>
         <% } %>
+        <span><a href="/logout">Logout</a></span>
         <% }else{ %>
         <span><a href="/login">Login</a></span>
         <% } %>

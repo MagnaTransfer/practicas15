@@ -1,0 +1,16 @@
+<fieldset>
+    <legend>Información de usuario</legend>
+    <div>
+        <label for="user[email]">Correo:</label>
+        <input type="text" id="user[email]" name="user[email]" value="<%= user.email %>"/>
+    </div>
+    <div>
+        <label for="user[password]">Contraseña:</label>
+        <input type="password" id="user[password]" name="user[password]" value="<%= user.password %>"/>
+    </div>
+    <div>
+        <label for="user[role]">Tipo de usuario:</label> <br>
+        <input type="radio" id="user[role]" name="user[role]" value="MANAGER" checked> Gestor académico <br>
+        <input type="radio" id="user[role]" name="user[role]" value="ADMIN"> Administrador <br>
+    </div>
+</fieldset>
