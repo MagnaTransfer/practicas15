@@ -1,43 +1,129 @@
-<!DOCTYPE html>
-<html lang="es">
+
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="utf-8">
-    <title> placeForMe </title>
-    <link rel="stylesheet"
-          type="text/css"
-          href="/stylesheets/style.css"/>
+  <title>placeForMe</title>
+  <meta charset="utf-8">
+  <link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="js/skel.min.js"></script>
+  <script src="js/skel-panels.min.js"></script>
+  <script src="js/init.js"></script>
+  <noscript>
+    <link rel="stylesheet" href="css/skel-noscript.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </noscript>
 </head>
-<body>
-<div id="page-wrap">
-    <header class="main" id="h1">
-        <% if(!session.user){ %>
-        <span class="right"><a href="/login">Iniciar sesiÃ³n</a></span>
-        <% }else{ %>
-        <span class="right"> <%= session.user.username %> <a href="/logout"> Salir </a></span>
-        <% } %>
-        <h1>placeForMe</h1>
-    </header>
-    <nav class="main" id="n1" role="navigation">
-        <span><a href="/">Inicio</a></span>
-        <span><a href="/login">Login</a></span>
-        <span><a href="/logout">Logout</a></span>
-    </nav>
-    <section class="main" id="s1">
-        <% if (typeof(errors) !== "undefined") { %>
-        <span id='ErrorMsgs'>
-        Corregir errores:<br/>
-            <% for (var i in errors) { %>
-            <span> <%= errors[i].message %> </span><br/>
-            <% } %>
-        </span>
-        <% } %>
 
-        <div><%- body %></div>
-    </section>
+<body class="homepage">
 
-    <footer class="main" id="f1">
-        <a href="http://www.magnasis.com">By Magna SIS</a>
-    </footer>
-</div>
-</body>
+  <!-- Header -->
+    <div id="header">
+      <div class="container">
+          
+        <!-- Logo -->
+          <div id="logo">
+            <h1><a href="#">placeForMe</a></h1>
+            <span>Descubre si entrarás en las optativas de cuarto</span>
+          </div>
+        
+        <!-- Nav -->
+          <nav id="nav">
+            <ul>
+              <li class="active"><a href="/">Inicio</a></li>
+              <% if(!session.user){ %>
+              <li><a href="/login">Iniciar sesión</a></li>
+              <% } %>
+              <% if(session.user){ %>
+              <li><a href="/logout">Salir</a></li>
+              <% } %>
+            </ul>
+          </nav>
+
+      </div>
+    </div>
+  <!-- Header -->
+      
+  <!-- Main -->
+    <div id="main">
+      <div class="container">
+          <div class="row">
+            <div class="12u">
+              <section>
+                <% if(session.user){ %>
+                <span><a href="/logout">Logout</a></span>
+                <% if(session.user.role === "ADMIN"){ %>
+                <span><a href="/users">Usuarios</a></span>
+                <% } %>
+                <% }else{ %>
+                <% } %>
+                <% if (typeof(errors) !== "undefined") { %>
+                <span id='ErrorMsgs'>
+                <!--Corregir errores:<br/>-->
+                    <% for (var i in errors) { %>
+                    <span> <%= errors[i].message %> </span><br/>
+                    <% } %>
+                </span>
+                <% } %>
+
+                <div><%- body %></div>
+              </section>
+            </div>
+          </div>            
+      </div>   
+  </div>
+  <!-- Main -->
+
+  <!-- Footer -->
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          
+          <div class="3u">
+            <section>
+              <ul class="contact">
+              <li>
+                <h3>Dirección</h3>
+                <p> Paseo Manuel Lardizabal 1<br>
+                  20018 San Sebastián (Gipuzkoa<br>
+                  </p>
+              </li>
+              <li>
+                <h3>Email</h3>
+                <p><a href="#">magnasis@magnasis.com</a></p>
+              </li>
+              <li>
+                <h3>Teléfono</h3>
+                <p>(+34) 943015022</p>
+                <p>(+34) 688962462</p>
+              </li>
+            </ul>
+            </section>        
+          </div>
+          <div class="4u">
+          <section>
+            <header>
+              <h2>Redes Sociales</h2>
+            </header>
+            <ul class="social">
+              <li class="facebook"><a href="https://www.facebook.com/MagnaSIS">Facebook</a></li>
+              <li class="twitter"><a href="https://twitter.com/magnasis">Twitter</a></li>
+              <li class="linkedin"><a href="https://www.linkedin.com/company/2687083?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A1-2-2%2CtarId%3A1435046170463%2Ctas%3Amagna%20sis">LinkedIn</a></li>
+              <li class="googleplus"><a href="#">Google+</a></li>
+            </ul>
+          </section>
+      </div>
+        </div>
+      </div>
+    </div>
+  <!-- Footer -->
+
+  <!-- Copyright -->
+    <div id="copyright">
+      <div class="container">
+        Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)
+      </div>
+    </div>
+
+  </body>
 </html>
