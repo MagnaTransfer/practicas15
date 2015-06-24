@@ -1,0 +1,26 @@
+<div>
+    <h3>Editar de usuario:</h3>
+
+    <form method="post" action="/users?_method=put">
+        <div>
+            <label>Correo:</label>
+            <input type="text" name="user[email]" value="<%= session.user.email %>" disabled>
+        </div>
+        <div>
+            <label>Contraseña actual:</label>
+            <input type="password" name="user[password]">
+        </div>
+        <div>
+            <label>Contraseña nueva:</label>
+            <input type="password" name="new">
+        </div>
+        <div>
+            <label>Repetir contraseña nueva:</label>
+            <input type="password" name="new2">
+        </div>
+        <input type="submit" value="Actualizar"/>
+        <a href="/">
+            <button type="button">Cancelar</button>
+        </a>
+    </form>
+</div>

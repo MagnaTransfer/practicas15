@@ -12,16 +12,12 @@
 <a href="/courses/<%= courses[index].id %>/edit">
     <button>Editar</button>
     <form method="post" action="/courses/<%= courses[index].id %>?_method=delete">
-        <button type="submit" onClick="return confirm('Eliminar asignatura: <% courses[index].name %>');">
+        <button type="submit" onClick="return confirm('Eliminar asignatura: <%= courses[index].name %>');">
             Eliminar asignatura
         </button>
     </form>
     <br>
 </a>
-<% } else { %>
-<form method="post" action="/courses/pick/<%= courses[index].id %>">
-    <input type="submit" value="Inscribirse"/>
-</form>
 <% } %>
 </li>
 

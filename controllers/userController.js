@@ -82,7 +82,7 @@ exports.index = function (req, res) {
 
 exports.new = function (req, res) {
     var user = models.User.build(
-        {email: "", password: ""}
+        {email: "", password: "", role: "MANAGER"}
     );
     res.render('users/new.ejs', {user: user});
 };
@@ -93,14 +93,19 @@ exports.create = function (req, res) {
         password: hasher.encrypt(req.body.user.password),
         role: req.body.user.role
     });
-    user.save({fields: ["email", "password", "role"]}).then(function () {
-        res.redirect('/users');
-    })
+    if (req.body.user.password === req.body.user.password2) {
+        user.save({fields: ["email", "password", "role"]}).then(function () {
+            res.redirect('/users');
+        });
+    }
+    else {
+        res.render('users/new', {user: user, errors: [new Error("Las contraseñas no coinciden")]});
+    }
 };
 
 exports.destroy = function (req, res) {
     req.user.destroy().then(function () {
-        res.redirect('/');
+        res.redirect('/users');
     }).catch(function (error) {
         next:(error)
     });
@@ -148,7 +153,12 @@ exports.send = function(req,res, next){
                     subject: 'Recuperar la contraseña',
                     html : "Hola,<br> Por favor presiona el enlace para recuperar tu contraseña.<br><a href="+link+">Presiona aquí para recuperar</a>"
                 });
-                res.redirect('/');
+                var errors = [];
+                errors[0] = new Error("Te hemos enviado un mensaje de correo electrónico. Por favor, revisa tu bandeja de entrada.")
+                res.render('index', {
+                    title: 'Express',
+                    errors: errors,
+                });
             })
         }
         else{
@@ -205,3 +215,45 @@ exports.change = function(req,res,next){
         }
     })
 }
+
+// GET /users/edit
+exports.edit = function (req, res, next) {
+    models.User.findById(req.session.user.id).then(function (user) {
+        if (user) {
+            res.render('users/edit', {});
+        }
+        else {
+            next(new Error('Usuario inexistente.'));
+        }
+    }).catch(function (error) {
+        next(error);
+    });
+};
+
+// PUT /users
+exports.updatePass = function (req, res, next) {
+    if (req.body.new === req.body.new2) {
+        models.User.findOne({
+            where: {
+                email: req.session.user.email,
+                password: hasher.encrypt(req.body.user.password)
+            }
+        }).then(
+            function (user) {
+                if (user) {
+                    user.password = hasher.encrypt(req.body.new);
+                    user.save({fields: ["password"]}).then(
+                        function () {
+                            res.render('index', {alerts: ["Usuario actualizado correctamente."]});
+                        }
+                    ).catch(function (error) {
+                            next(error);
+                        });
+                } else {
+                    res.render('users/edit', {errors: [{message: "La contraseña actual no es correcta."}]});
+                }
+            })
+    } else {
+        res.render('users/edit', {errors: [{message: "Las contraseñas no coinciden"}]});
+    }
+};

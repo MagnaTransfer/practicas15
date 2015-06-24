@@ -67,6 +67,7 @@ exports.create = function(req, res, next) {
             else {
                 course.save({
                     fields: ["name", "description", "specialisation", "credits", "vacancies"]
+                    /*TODO añadir season a la asignatura*/
                 }).then(
                     function() {
                         res.redirect('/courses');
@@ -192,7 +193,6 @@ exports.pick = function(req, res, next) {
         req.course.addStudent(student, {
             course_position: student.avgGrade
         });
-        /* TODO mostrar mensaje antes en vez de redireccionar? */
         res.redirect('/students/mycourses');
     }).catch(function(error) {
         next(error);
@@ -209,11 +209,9 @@ exports.unpick = function(req, res, next) {
         req.course.hasStudent(student).then(function(result) {
             if (result) {
                 req.course.removeStudent(student);
-                /* TODO redireccion caso exito */
                 res.redirect('/courses/' + req.course.id);
             }
             else {
-                /* TODO redireccion caso error */
                 res.redirect('/courses')
             }
         }).catch(function(error) {

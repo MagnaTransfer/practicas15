@@ -43,7 +43,7 @@ exports.roleRequired = function (role1, role2) {
         }
         else {
             /* TODO personaliza error */
-            next(new Error('405: Unauthorized'));
+            res.status(405).render('index', {errors: [new Error('Acceso no autorizado')]});
         }
     }
 };

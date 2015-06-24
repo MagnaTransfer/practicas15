@@ -20,7 +20,7 @@
     </div>
     <div>
         <label for="student[credits]">Créditos superados: </label>
-        <input type="number" id="student[credits]"
+        <input type="number" min="0" max="240" id="student[credits]"
                name="student[credits]" value="<%= student.credits %>"/>
     </div>
     <div>

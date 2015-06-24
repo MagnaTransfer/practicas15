@@ -1,6 +1,7 @@
 <div>
     <h3>Perfil:</h3>
-    <form method="post" action="/students/<%= user.id %>?_method=put">
+
+    <form method="post" action="/students?_method=put">
         <% include _form.student.ejs %>
         <input type="submit" value="Actualizar" />
         <a href="/students">

@@ -46,7 +46,7 @@ router.post('/courses/pick/:courseId(\\d+)', courseController.pick);
 router.delete('/courses/unpick/:courseId(\\d+)', courseController.unpick);
 
 /* students */
-router.get('/students/new',sessionController.logoutRequired, studentController.new);
+router.get('/register', sessionController.logoutRequired, studentController.new);
 router.post('/students', studentController.create);
 router.delete('/students', studentController.destroy);
 router.get('/students/edit', sessionController.loginRequired,
@@ -56,7 +56,7 @@ router.get('/students/mycourses', sessionController.loginRequired,
     sessionController.roleRequired("STUDENT"), studentController.courses);
 
 //Definicion de rutas de sesion
-router.get('/login', sessionController.new); // formulario login, muestra la pagina
+router.get('/login', sessionController.logoutRequired, sessionController.new); // formulario login, muestra la pagina
 router.post('/login', sessionController.create); //hacer login
 router.get('/logout',sessionController.loginRequired, sessionController.destroy); //hacer logout
 
@@ -67,6 +67,8 @@ router.get('/users',sessionController.loginRequired,
 router.get('/users/new',sessionController.loginRequired,
     sessionController.roleRequired("ADMIN"), userController.new);
 router.post('/users', userController.create);
+router.get('/users/edit', userController.edit);
+router.put('/users', userController.updatePass);
 router.delete('/users/:userId(\\d+)',sessionController.loginRequired,
     sessionController.roleRequired("ADMIN"), userController.destroy);
 

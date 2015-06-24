@@ -6,11 +6,19 @@
     </div>
     <div>
         <label for="user[password]">Contraseña:</label>
-        <input type="password" id="user[password]" name="user[password]" value="<%= user.password %>"/>
+        <input type="password" id="user[password]" name="user[password]"/>
+    </div>
+    <div>
+        <label for="user[password2]">Repite contraseña:</label>
+        <input type="password" id="user[password2]" name="user[password2]"/>
     </div>
     <div>
         <label for="user[role]">Tipo de usuario:</label> <br>
-        <input type="radio" id="user[role]" name="user[role]" value="MANAGER" checked> Gestor académico <br>
-        <input type="radio" id="user[role]" name="user[role]" value="ADMIN"> Administrador <br>
+        <input type="radio" id="user[role]" name="user[role]" value="MANAGER" <% if(user.role === "MANAGER"){ %>checked
+                <% } %>
+                > Gestor académico <br>
+        <input type="radio" id="user[role]" name="user[role]" value="ADMIN" <% if(user.role === "ADMIN"){ %>checked
+                <% } %>
+                > Administrador <br>
     </div>
 </fieldset>

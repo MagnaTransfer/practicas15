@@ -41,11 +41,11 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             validate: {
                 min: {
-                    args: 2,
+                    args: [2],
                     msg: "-> Curso minimo 2º",
                 },
                 max: {
-                    args: 4,
+                    args: [4],
                     msg: "-> Curso maximo 4º",
                 },
                 notEmpty: {
@@ -57,16 +57,28 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.FLOAT,
             allowNull: false,
             validate: {
-                min: 0,
-                max: 10,
+                min: {
+                    args: [0],
+                    msg: "-> Nota minima 0"
+                },
+                max: {
+                    args: [10],
+                    msg: "-> Nota maxima 10"
+                },
             }
         },
         credits: {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                min: 0,
-                max: 240,
+                min: {
+                    args: [0],
+                    msg: "-> Creditos minimos 0"
+                },
+                max: {
+                    args: [240],
+                    msg: "-> Creditos maximos 240"
+                },
             }
         },
         specialisation: {

@@ -6,7 +6,11 @@
     </div>
     <div>
         <label for="user[password]">Contraseña: </label>
-        <input type="password" id="user[password]" name="user[password]" value="<%= user.password %>" required />
+        <input type="password" id="user[password]" name="user[password]" required/>
+    </div>
+    <div>
+        <label for="user[password2]">Repite contraseña: </label>
+        <input type="password" id="user[password2]" name="user[password2]" required/>
     </div>
     <input type="hidden" name="user[role]" value="STUDENT" />
 </fieldset>

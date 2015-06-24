@@ -53,7 +53,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         season: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         }
     });
 }

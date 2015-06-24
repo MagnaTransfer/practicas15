@@ -73,7 +73,7 @@ exports.Course = Course;
 exports.StudentCourse = StudentCourse;
 
 sequelize.sync().then(function() {
-    User.create({
+    /* User.create({
         email: 'student',
         password: 'student',
         role: 'STUDENT',
@@ -96,6 +96,17 @@ sequelize.sync().then(function() {
         credits: 6,
         vacancies: 14,
         season: '2014/2015',
-    });
+     });*/
+    User.count({where: {role: "ADMIN"}}).then(
+        function (result) {
+            if (result < 1) {
+                User.create({
+                    email: "admin",
+                    password: require('../libs/hasher').encrypt("admin"),
+                    role: "ADMIN",
+                })
+            }
+        }
+    )
     console.log('Base de datos abierta');
 });

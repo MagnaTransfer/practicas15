@@ -50,8 +50,10 @@ exports.create = function(req, res, next) {
     });
 
     if (req.body.condiciones === "aceptado") {
+        if (req.body.user.password === req.body.user.password2) {
         user.validate().then(function (err) {
             if (err) {
+                user.password = "";
                 res.render('students/new', {
                     user: user,
                     student: student,
@@ -83,9 +85,20 @@ exports.create = function(req, res, next) {
         }).catch(function (error) {
             next(error);
         });
+        } else {
+            var errors = [];
+            errors[0] = new Error('Las contraseñas no coinciden.');
+            user.password = "";
+            res.render('students/new', {
+                user: user,
+                student: student,
+                errors: errors,
+            });
+        }
     } else {
         var errors = [];
-        errors[0] = new Error('No se han aceptado los t�rminos y condiciones de uso.');
+        errors[0] = new Error('No se han aceptado los términos y condiciones de uso.');
+        user.password = "";
         res.render('students/new', {
             user: user,
             student: student,
@@ -144,13 +157,15 @@ exports.update = function (req, res, next) {
                 student.specialisation = req.body.student.specialisation;
 
                 student.validate().then(function (err) {
-                    if (err)
-                    /* TODO control de error */
-                        ;
-                    else
+                    if (err) {
+                        res.render('/students/edit', {student: student, errors: err.errors});
+                    }
+                    else {
                         student.save().then(function () {
-                            res.redirect(/* TODO redireccion */ '/students');
+                            //res.setHeader('Location', '/');
+                            res.render('index', {alerts: ["Usuario actualizado con éxito"]});
                         });
+                    }
                 });
             });
         }

@@ -1,11 +1,15 @@
 <div>
-    <h3>Tus selecciones: </h3>
+    <h3>Tus elecciones: </h3>
     <ul>
         <% for (var i=0; i<courses.length; i++) { %>
         <li>
             <a href="/courses/<%= courses[i].id %>">
                 <span><%= courses[i].name %></span>
             </a>
+
+            <form method="post" action="/courses/unpick/<%= courses[i].id %>?_method=delete">
+                <input type="submit" value="Desinscribirse"/>
+            </form>
         </li>
         <% } %>
     </ul>
