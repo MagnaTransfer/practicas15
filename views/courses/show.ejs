@@ -9,15 +9,17 @@
         <li>3º: <%= alumnos[3] %></li>
         <li>4º: <%= alumnos[4] %></li>
     </ul>
-    <% if (session.user.role === "STUDENT" && !inscrito ) { %>
+    <% if (session.user.role === "STUDENT") { %>
+    <% if(!inscrito){ %>
         <form method="post" action="/courses/pick/<%= course.id %>">
             <input type="submit" value="Inscribirse" />
         </form>
-    <% } else { %>
+    <% }else{ %>
         <span>Ya estas inscrito en esta asignatura.</span>
         <form method="post" action="/courses/unpick/<%= course.id %>?_method=delete">
             <input type="submit" value="Desinscribirse" />
         </form>
+    <% } %>
     <% } %>
     <a href="/courses">Volver</a>
 </div>

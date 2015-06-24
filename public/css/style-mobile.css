@@ -255,4 +255,8 @@ ul.style1 .posted {
 
 #footer h2 {
 }
-	
+
+.footer-logo {
+    width: 150px;
+    float: none;
+}
