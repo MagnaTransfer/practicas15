@@ -69,7 +69,7 @@ exports.create = function (req, res) {
 
         if (error) { // si hay error, retornamos mensajes de error de sesion
             req.session.errors = [{
-                "message": 'Se ha producido un error:' + error
+                "message": error.toString()
             }];
             res.redirect("/login");
             return;

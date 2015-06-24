@@ -5,9 +5,7 @@
 <% for(index in courses){ %>
     <li>
 <% course = courses[index]; %>
-<a href="/courses/<%= courses[index].id %>">
-    <%= courses[index].name %><br>
-</a>
+<a href="/courses/<%= courses[index].id %>"><%= courses[index].name %></a>
 <% if (session.user.role === "MANAGER" || session.user.role === "ADMIN") { %>
 <a href="/courses/<%= courses[index].id %>/edit">
     <button>Editar</button>
