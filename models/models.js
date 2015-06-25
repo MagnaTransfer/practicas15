@@ -42,7 +42,10 @@ var sequelize = new Sequelize(DB_name, user, pwd, {
     port: port,
     host: host,
     storage: storage, // solo SQLite (.env)
-    omitNull: true
+    omitNull: true,
+    dialectOptions: {
+        ssl: true
+    }
 });
 
 // Importar definiciones de tablas
