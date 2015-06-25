@@ -28,10 +28,10 @@
     "pg-hstore": "^2.3.2",
     "randomstring": "^1.0.6",
     "sequelize": "^3.2.0",
+    "dotenv": "^1.1.0",
     "serve-favicon": "~2.2.1"
   },
   "devDependencies": {
-    "dotenv": "^1.1.0",
     "sqlite3": "^3.0.8"
   }
 }
