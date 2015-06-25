@@ -429,3 +429,8 @@ ul.social li.googleplus:hover {
     width: 200px;
     float: right;
 }
+
+.terms {
+    height: 150px;
+    width: 90%;
+}

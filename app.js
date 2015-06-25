@@ -25,6 +25,8 @@ var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
 var session = require('express-session');
+require('dotenv').load();
+
 
 var routes = require('./routes/index');
 
@@ -92,7 +94,6 @@ next();
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    require('dotenv').load();
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
